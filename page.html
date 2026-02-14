@@ -133,6 +133,34 @@
       padding: 60px 0;
       font-size: 14px;
     }
+    .appendix-link {
+      margin-top: 48px;
+      padding: 16px 20px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      color: #222;
+      transition: background 0.15s;
+    }
+    .appendix-link:hover { background: #f8f8f8; }
+    .appendix-link .label {
+      font-size: 11px;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .appendix-link .title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+    .appendix-link .arrow {
+      font-size: 18px;
+      color: #bbb;
+    }
   </style>
 </head>
 <body>
@@ -219,14 +247,37 @@
     }
   });
 
+  // Main → Appendix mapping
+  const mainToAppendix = {
+    "output/01_メイン_前提の整理.md": "output/01_補足_前提の整理.md",
+    "output/02_メイン_結論.md": "output/02_補足_現状認識.md",
+    "output/03_メイン_既存モデルの天井.md": "output/03_補足_課題.md",
+    "output/04_メイン_課題.md": "output/04_補足_事業領域の広げ方.md",
+    "output/05_メイン_事業領域の広げ方.md": "output/05_補足_事業の再定義.md",
+    "output/06_メイン_事業の再定義.md": "output/06_補足_戦略提言.md",
+    "output/07_メイン_戦略提言.md": "output/07_補足_売上ブリッジ.md",
+    "output/08_メイン_売上ブリッジ.md": "output/08_補足_実行ロードマップ.md"
+  };
+
   // Load and render
   async function load() {
     try {
       const res = await fetch(file);
       if (!res.ok) throw new Error('Not found');
       const md = await res.text();
-      document.getElementById('content').innerHTML = marked.parse(md);
-      // Set page title from first heading or filename
+      let html = marked.parse(md);
+
+      // Add appendix link if this is a main slide
+      const appendix = mainToAppendix[file];
+      if (appendix) {
+        const name = appendix.replace('output/', '').replace('.md', '').replace(/^\d+_補足_/, '');
+        html += `<a class="appendix-link" href="page.html?f=${encodeURIComponent(appendix)}">
+          <div><div class="label">補足資料</div><div class="title">${name}</div></div>
+          <div class="arrow">&rarr;</div>
+        </a>`;
+      }
+
+      document.getElementById('content').innerHTML = html;
       const title = md.match(/^#\s+(.+)/m);
       document.title = title ? title[1] : file.replace(/.*\//, '').replace('.md', '');
     } catch (e) {
