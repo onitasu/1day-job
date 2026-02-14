@@ -1,0 +1,12 @@
+# System files
+.DS_Store
+*.pdf
+
+# Local dev files
+output/serve.py
+output/viewer.html
+output/old/
+output/Untitled
+
+# Claude
+CLAUDE.md

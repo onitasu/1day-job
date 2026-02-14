@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>モスバーガー 成長戦略提言</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a2e;
+      --surface-hover: #222240;
+      --accent: #4fc3f7;
+      --accent-dim: #2a7da8;
+      --text: #e8e8e8;
+      --text-muted: #999;
+      --border: #2a2a4a;
+      --slide-bg: #ffffff;
+      --slide-text: #1a1a1a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 300px;
+      min-width: 300px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-header h1 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+    }
+
+    .sidebar-header .subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .file-section {
+      padding: 12px 0 0;
+    }
+
+    .file-section-title {
+      padding: 4px 20px 8px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+    }
+
+    .file-list {
+      list-style: none;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .file-item {
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      transition: all 0.15s;
+      border-left: 3px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .file-item:hover {
+      background: var(--surface-hover);
+      color: var(--text);
+    }
+
+    .file-item.active {
+      background: var(--surface-hover);
+      color: var(--accent);
+      border-left-color: var(--accent);
+      font-weight: 600;
+    }
+
+    .file-item .badge {
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+
+    .badge.main { background: var(--accent); color: #000; }
+    .badge.sub { background: #444; color: #ccc; }
+    .badge.ref { background: #5c6bc0; color: #fff; }
+
+    /* Main area */
+    .main-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 32px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .toolbar .slide-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+      margin-right: 16px;
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .nav-btn {
+      background: var(--surface-hover);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.15s;
+    }
+
+    .nav-btn:hover { background: var(--accent-dim); border-color: var(--accent); }
+    .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    .slide-counter {
+      font-size: 12px;
+      color: var(--text-muted);
+      min-width: 60px;
+      text-align: center;
+    }
+
+    /* Content area */
+    .content-container {
+      flex: 1;
+      overflow-y: auto;
+      background: var(--slide-bg);
+    }
+
+    .content {
+      color: var(--slide-text);
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 40px 48px 80px;
+    }
+
+    .content h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #1a1a2e;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid var(--accent);
+      line-height: 1.3;
+    }
+
+    .content h2 {
+      font-size: 21px;
+      font-weight: 700;
+      color: #2a2a4a;
+      margin-top: 32px;
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+
+    .content h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #444;
+      margin-top: 24px;
+      margin-bottom: 10px;
+    }
+
+    .content p {
+      font-size: 15px;
+      line-height: 1.9;
+      margin-bottom: 14px;
+      color: #333;
+    }
+
+    .content ul, .content ol {
+      padding-left: 28px;
+      margin-bottom: 14px;
+    }
+
+    .content li {
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 6px;
+      color: #333;
+    }
+
+    .content blockquote {
+      border-left: 4px solid var(--accent);
+      background: #f0f8ff;
+      padding: 14px 24px;
+      margin: 20px 0;
+      border-radius: 0 6px 6px 0;
+      font-size: 16px;
+      color: #1a1a2e;
+      font-weight: 500;
+    }
+
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+
+    .content thead th {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 11px 16px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .content tbody td {
+      padding: 10px 16px;
+      border-bottom: 1px solid #e0e0e0;
+      vertical-align: top;
+    }
+
+    .content tbody tr:nth-child(even) { background: #f8f9fa; }
+    .content tbody tr:hover { background: #e8f4fd; }
+
+    .content strong { color: #1a1a2e; font-weight: 700; }
+
+    .content code {
+      background: #f0f0f0;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 13px;
+    }
+
+    .content hr {
+      border: none;
+      border-top: 1px solid #ddd;
+      margin: 28px 0;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      padding: 40px;
+    }
+
+    .keyboard-hint {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+      font-size: 10px;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .keyboard-hint kbd {
+      background: var(--surface-hover);
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-family: inherit;
+      font-size: 10px;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        min-width: unset;
+        height: auto;
+        max-height: 40vh;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      body { flex-direction: column; }
+      .content { padding: 24px 20px 60px; }
+      .toolbar { padding: 10px 16px; }
+      .toolbar .slide-title { font-size: 12px; }
+    }
+
+    @media print {
+      .sidebar, .toolbar { display: none; }
+      body { background: white; }
+      .content-container { overflow: visible; }
+      .content { max-width: none; padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h1>モスバーガー 成長戦略提言</h1>
+    <div class="subtitle" id="fileCount">Loading...</div>
+  </div>
+  <ul class="file-list" id="fileList"></ul>
+  <div class="keyboard-hint">
+    <kbd>&larr;</kbd> <kbd>&rarr;</kbd> スライド移動
+    <kbd>F</kbd> フルスクリーン
+  </div>
+</aside>
+
+<main class="main-area">
+  <div class="toolbar">
+    <div class="slide-title" id="slideTitle">—</div>
+    <div class="nav-controls">
+      <button class="nav-btn" id="prevBtn" disabled>&larr; Prev</button>
+      <span class="slide-counter" id="slideCounter">—</span>
+      <button class="nav-btn" id="nextBtn" disabled>Next &rarr;</button>
+    </div>
+  </div>
+  <div class="content-container">
+    <div class="content" id="slideContent">
+      <div class="empty-state">左のリストからファイルを選択してください</div>
+    </div>
+  </div>
+</main>
+
+<script>
+  // Static file list for GitHub Pages
+  const slideFiles = [
+    { name: "01_メイン_前提の整理.md", path: "output/01_メイン_前提の整理.md" },
+    { name: "01_補足_前提の整理.md", path: "output/01_補足_前提の整理.md" },
+    { name: "02_メイン_結論.md", path: "output/02_メイン_結論.md" },
+    { name: "02_補足_現状認識.md", path: "output/02_補足_現状認識.md" },
+    { name: "03_メイン_既存モデルの天井.md", path: "output/03_メイン_既存モデルの天井.md" },
+    { name: "03_補足_課題.md", path: "output/03_補足_課題.md" },
+    { name: "04_メイン_課題.md", path: "output/04_メイン_課題.md" },
+    { name: "04_補足_事業領域の広げ方.md", path: "output/04_補足_事業領域の広げ方.md" },
+    { name: "05_メイン_事業領域の広げ方.md", path: "output/05_メイン_事業領域の広げ方.md" },
+    { name: "05_補足_事業の再定義.md", path: "output/05_補足_事業の再定義.md" },
+    { name: "06_メイン_事業の再定義.md", path: "output/06_メイン_事業の再定義.md" },
+    { name: "06_補足_戦略提言.md", path: "output/06_補足_戦略提言.md" },
+    { name: "07_メイン_戦略提言.md", path: "output/07_メイン_戦略提言.md" },
+    { name: "07_補足_売上ブリッジ.md", path: "output/07_補足_売上ブリッジ.md" },
+    { name: "08_メイン_売上ブリッジ.md", path: "output/08_メイン_売上ブリッジ.md" },
+    { name: "08_補足_実行ロードマップ.md", path: "output/08_補足_実行ロードマップ.md" },
+    { name: "09_メイン_実行ロードマップ.md", path: "output/09_メイン_実行ロードマップ.md" }
+  ];
+
+  const researchFiles = [
+    { name: "01_モス財務状況.md", path: "research/01_モス財務状況.md" },
+    { name: "02_M&A候補調査.md", path: "research/02_M&A候補調査.md" },
+    { name: "03_モス海外事業.md", path: "research/03_モス海外事業.md" },
+    { name: "04_隣接市場規模.md", path: "research/04_隣接市場規模.md" },
+    { name: "05_モスファーム・農業事業.md", path: "research/05_モスファーム・農業事業.md" },
+    { name: "06_食品加工・製造.md", path: "research/06_食品加工・製造.md" },
+    { name: "07_物流・コールドチェーン.md", path: "research/07_物流・コールドチェーン.md" },
+    { name: "08_垂直統合の他社事例.md", path: "research/08_垂直統合の他社事例.md" },
+    { name: "09_モス売上構造.md", path: "research/09_モス売上構造.md" },
+    { name: "10_マクドナルド売上構造.md", path: "research/10_マクドナルド売上構造.md" },
+    { name: "11_世界の垂直統合・売上構造事例.md", path: "research/11_世界の垂直統合・売上構造事例.md" },
+    { name: "12_B2B外食サプライ市場.md", path: "research/12_B2B外食サプライ市場.md" },
+    { name: "13_農業市場・企業化動向.md", path: "research/13_農業市場・企業化動向.md" },
+    { name: "14_川上統合グローバル事例.md", path: "research/14_川上統合グローバル事例.md" },
+    { name: "15_食品製造M&A候補.md", path: "research/15_食品製造M&A候補.md" }
+  ];
+
+  const state = {
+    currentIndex: -1,
+    viewingResearch: false,
+    cache: {}
+  };
+
+  function classifyFile(filename) {
+    if (filename.includes('補足')) return 'sub';
+    return 'main';
+  }
+
+  function cleanDisplayName(filename) {
+    return filename.replace(/\.md$/, '').replace(/_/g, ' ');
+  }
+
+  function init() {
+    renderFileList();
+    document.getElementById('fileCount').textContent =
+      `${slideFiles.length} slides / ${researchFiles.length} refs`;
+    if (slideFiles.length > 0) selectFile(0);
+  }
+
+  function renderFileList() {
+    const list = document.getElementById('fileList');
+    const mainFiles = [];
+    const subFiles = [];
+
+    slideFiles.forEach((f, i) => {
+      const type = classifyFile(f.name);
+      if (type === 'sub') {
+        subFiles.push({ ...f, index: i });
+      } else {
+        mainFiles.push({ ...f, index: i });
+      }
+    });
+
+    let html = '';
+
+    if (mainFiles.length > 0) {
+      html += '<div class="file-section"><div class="file-section-title">Main Slides</div>';
+      mainFiles.forEach(f => {
+        html += `<li class="file-item" data-index="${f.index}" data-type="slide">
+          <span class="badge main">MAIN</span>
+          <span>${cleanDisplayName(f.name)}</span>
+        </li>`;
+      });
+      html += '</div>';
+    }
+
+    if (subFiles.length > 0) {
+      html += '<div class="file-section"><div class="file-section-title">Appendix</div>';
+      subFiles.forEach(f => {
+        html += `<li class="file-item" data-index="${f.index}" data-type="slide">
+          <span class="badge sub">SUB</span>
+          <span>${cleanDisplayName(f.name)}</span>
+        </li>`;
+      });
+      html += '</div>';
+    }
+
+    if (researchFiles.length > 0) {
+      html += '<div class="file-section"><div class="file-section-title">Reference</div>';
+      researchFiles.forEach((f, i) => {
+        html += `<li class="file-item" data-index="${i}" data-type="research">
+          <span class="badge ref">REF</span>
+          <span>${cleanDisplayName(f.name)}</span>
+        </li>`;
+      });
+      html += '</div>';
+    }
+
+    list.innerHTML = html;
+
+    list.querySelectorAll('.file-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const idx = parseInt(item.dataset.index);
+        if (item.dataset.type === 'research') {
+          selectResearch(idx);
+        } else {
+          selectFile(idx);
+        }
+      });
+    });
+  }
+
+  function updateActiveState(type, index) {
+    document.querySelectorAll('.file-item').forEach(el => {
+      const elIndex = parseInt(el.dataset.index);
+      const elType = el.dataset.type;
+      el.classList.toggle('active', elType === type && elIndex === index);
+    });
+  }
+
+  async function selectFile(index) {
+    if (index < 0 || index >= slideFiles.length) return;
+    state.currentIndex = index;
+    state.viewingResearch = false;
+
+    const file = slideFiles[index];
+    updateActiveState('slide', index);
+
+    document.getElementById('slideTitle').textContent = cleanDisplayName(file.name);
+    document.getElementById('slideCounter').textContent = `${index + 1} / ${slideFiles.length}`;
+    document.getElementById('prevBtn').disabled = index === 0;
+    document.getElementById('nextBtn').disabled = index === slideFiles.length - 1;
+
+    await renderMarkdown(file.path);
+  }
+
+  async function selectResearch(index) {
+    if (index < 0 || index >= researchFiles.length) return;
+    state.currentIndex = index;
+    state.viewingResearch = true;
+
+    const file = researchFiles[index];
+    updateActiveState('research', index);
+
+    document.getElementById('slideTitle').textContent = 'REF: ' + cleanDisplayName(file.name);
+    document.getElementById('slideCounter').textContent = `Ref ${index + 1} / ${researchFiles.length}`;
+    document.getElementById('prevBtn').disabled = index === 0;
+    document.getElementById('nextBtn').disabled = index === researchFiles.length - 1;
+
+    await renderMarkdown(file.path);
+  }
+
+  async function renderMarkdown(path) {
+    const contentEl = document.getElementById('slideContent');
+    if (!state.cache[path]) {
+      try {
+        const res = await fetch(path);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        state.cache[path] = await res.text();
+      } catch (e) {
+        contentEl.innerHTML = `<div class="empty-state">ファイルの読み込みに失敗しました: ${path}</div>`;
+        return;
+      }
+    }
+    const md = state.cache[path];
+    contentEl.innerHTML = marked.parse(md);
+    document.querySelector('.content-container').scrollTop = 0;
+  }
+
+  // Navigation
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    (state.viewingResearch ? selectResearch : selectFile)(state.currentIndex - 1);
+  });
+
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    (state.viewingResearch ? selectResearch : selectFile)(state.currentIndex + 1);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+      (state.viewingResearch ? selectResearch : selectFile)(state.currentIndex - 1);
+    } else if (e.key === 'ArrowRight') {
+      (state.viewingResearch ? selectResearch : selectFile)(state.currentIndex + 1);
+    } else if (e.key === 'f' || e.key === 'F') {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    }
+  });
+
+  init();
+</script>
+
+</body>
+</html>
