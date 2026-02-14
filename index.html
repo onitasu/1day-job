@@ -18,7 +18,6 @@
       --slide-bg: #ffffff;
       --slide-text: #1a1a1a;
       --sub-color: #ffb74d;
-      --ref-color: #7c8cf5;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,8 +33,8 @@
 
     /* Sidebar */
     .sidebar {
-      width: 300px;
-      min-width: 300px;
+      width: 280px;
+      min-width: 280px;
       background: var(--surface);
       border-right: 1px solid var(--border);
       display: flex;
@@ -79,8 +78,6 @@
       overflow-y: auto;
       flex: 1;
     }
-
-    .slide-group { margin-bottom: 2px; }
 
     .file-item {
       padding: 10px 20px;
@@ -152,8 +149,7 @@
       overflow: hidden;
     }
 
-    /* Top bar - title only, no nav buttons */
-    .topbar {
+    .toolbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -163,19 +159,15 @@
       flex-shrink: 0;
     }
 
-    .topbar .slide-title {
+    .toolbar .slide-title {
       font-size: 14px;
       font-weight: 600;
       color: var(--text);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
-    .topbar .slide-counter {
+    .toolbar .slide-counter {
       font-size: 12px;
       color: var(--text-muted);
-      flex-shrink: 0;
     }
 
     /* Tab bar */
@@ -202,20 +194,9 @@
       transition: all 0.15s;
     }
 
-    .tab-btn:hover {
-      color: var(--text);
-      background: var(--surface-hover);
-    }
-
-    .tab-btn.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
-
-    .tab-btn.active.sub-tab {
-      color: var(--sub-color);
-      border-bottom-color: var(--sub-color);
-    }
+    .tab-btn:hover { color: var(--text); background: var(--surface-hover); }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab-btn.active.sub-tab { color: var(--sub-color); border-bottom-color: var(--sub-color); }
 
     /* Content area */
     .content-container {
@@ -228,14 +209,15 @@
       color: var(--slide-text);
       max-width: 880px;
       margin: 0 auto;
-      padding: 40px 48px 20px;
+      padding: 40px 48px 40px;
     }
 
-    /* Related research section */
+    /* Related research - inside content area */
     .related-research {
       max-width: 880px;
       margin: 0 auto;
-      padding: 0 48px 20px;
+      padding: 0 48px 24px;
+      display: none;
     }
 
     .related-research-title {
@@ -243,9 +225,9 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      color: #999;
+      color: #aaa;
       margin-bottom: 10px;
-      padding-top: 20px;
+      padding-top: 24px;
       border-top: 1px solid #e0e0e0;
     }
 
@@ -259,18 +241,18 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 14px;
-      background: #f0f0ff;
-      border: 1px solid #d0d0e8;
+      padding: 7px 14px;
+      background: #f4f4fa;
+      border: 1px solid #ddd;
       border-radius: 6px;
       cursor: pointer;
       font-size: 12px;
-      color: #444;
+      color: #555;
       transition: all 0.15s;
     }
 
     .related-research-item:hover {
-      background: #e0e8ff;
+      background: #e8ecff;
       border-color: #5c6bc0;
       color: #333;
     }
@@ -284,13 +266,13 @@
       font-weight: 700;
     }
 
-    /* Bottom page navigation */
+    /* Bottom page nav - dark themed, outside content */
     .bottom-nav {
-      max-width: 880px;
-      margin: 0 auto;
-      padding: 24px 48px 48px;
       display: flex;
-      gap: 16px;
+      align-items: stretch;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
     }
 
     .bottom-nav-btn {
@@ -298,22 +280,22 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 16px 20px;
-      background: #f8f9fa;
-      border: 1px solid #e0e0e0;
-      border-radius: 10px;
+      padding: 14px 24px;
+      background: transparent;
+      border: none;
       cursor: pointer;
       transition: all 0.15s;
-      text-decoration: none;
+      color: var(--text);
     }
 
-    .bottom-nav-btn:hover {
-      background: #e8f4fd;
-      border-color: var(--accent);
+    .bottom-nav-btn:first-child {
+      border-right: 1px solid var(--border);
     }
+
+    .bottom-nav-btn:hover { background: var(--surface-hover); }
 
     .bottom-nav-btn.disabled {
-      opacity: 0.3;
+      opacity: 0.25;
       pointer-events: none;
     }
 
@@ -323,7 +305,7 @@
     }
 
     .bottom-nav-btn .arrow {
-      font-size: 20px;
+      font-size: 18px;
       color: var(--accent);
       flex-shrink: 0;
     }
@@ -335,16 +317,16 @@
 
     .bottom-nav-btn .nav-label {
       font-size: 10px;
-      color: #999;
+      color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 2px;
     }
 
     .bottom-nav-btn .nav-title {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
-      color: #333;
+      color: var(--text);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -359,15 +341,8 @@
       margin-top: 3px;
     }
 
-    .bottom-nav-btn .nav-badge.is-sub {
-      background: #fff3e0;
-      color: #e65100;
-    }
-
-    .bottom-nav-btn .nav-badge.is-main {
-      background: #e3f2fd;
-      color: #1565c0;
-    }
+    .bottom-nav-btn .nav-badge.is-sub { background: rgba(255,183,77,0.2); color: var(--sub-color); }
+    .bottom-nav-btn .nav-badge.is-main { background: rgba(79,195,247,0.15); color: var(--accent); }
 
     /* Typography */
     .content h1 {
@@ -451,7 +426,6 @@
 
     .content tbody tr:nth-child(even) { background: #f8f9fa; }
     .content tbody tr:hover { background: #e8f4fd; }
-
     .content strong { color: #1a1a2e; font-weight: 700; }
 
     .content code {
@@ -492,7 +466,7 @@
     }
 
     @media print {
-      .sidebar, .topbar, .tab-bar { display: none; }
+      .sidebar, .toolbar, .tab-bar, .bottom-nav { display: none; }
       body { background: white; }
       .content-container { overflow: visible; }
       .content { max-width: none; padding: 20px; }
@@ -515,7 +489,7 @@
 </aside>
 
 <main class="main">
-  <div class="topbar">
+  <div class="toolbar">
     <div class="slide-title" id="slideTitle">-</div>
     <div class="slide-counter" id="slideCounter">-</div>
   </div>
@@ -529,28 +503,29 @@
     <div class="content" id="slideContent">
       <div class="empty-state">左のリストからファイルを選択してください</div>
     </div>
-    <div class="related-research" id="relatedResearch" style="display:none;">
+    <div class="related-research" id="relatedResearch">
       <div class="related-research-title">関連する調査資料</div>
       <div class="related-research-list" id="relatedResearchList"></div>
     </div>
-    <div class="bottom-nav" id="bottomNav">
-      <button class="bottom-nav-btn prev disabled" id="bottomPrev">
-        <span class="arrow">&larr;</span>
-        <div class="nav-text">
-          <div class="nav-label">Previous</div>
-          <div class="nav-title" id="prevTitle">-</div>
-          <div class="nav-badge" id="prevBadge"></div>
-        </div>
-      </button>
-      <button class="bottom-nav-btn next disabled" id="bottomNext">
-        <span class="arrow">&rarr;</span>
-        <div class="nav-text">
-          <div class="nav-label">Next</div>
-          <div class="nav-title" id="nextTitle">-</div>
-          <div class="nav-badge" id="nextBadge"></div>
-        </div>
-      </button>
-    </div>
+  </div>
+
+  <div class="bottom-nav" id="bottomNav">
+    <button class="bottom-nav-btn prev disabled" id="bottomPrev">
+      <span class="arrow">&larr;</span>
+      <div class="nav-text">
+        <div class="nav-label">Previous</div>
+        <div class="nav-title" id="prevTitle">-</div>
+        <div class="nav-badge" id="prevBadge"></div>
+      </div>
+    </button>
+    <button class="bottom-nav-btn next disabled" id="bottomNext">
+      <span class="arrow">&rarr;</span>
+      <div class="nav-text">
+        <div class="nav-label">Next</div>
+        <div class="nav-title" id="nextTitle">-</div>
+        <div class="nav-badge" id="nextBadge"></div>
+      </div>
+    </button>
   </div>
 </main>
 
@@ -561,16 +536,15 @@
 </script>
 
 <script>
-  // Research-to-slide mapping: slide number -> array of research file prefixes
   const RESEARCH_MAP = {
-    '01': ['01', '09', '10'],           // 前提の整理 ← 財務状況, モス売上構造, マクドナルド売上構造
-    '02': ['01', '03', '09', '10'],     // 現状認識 ← 財務状況, 海外事業, モス/マック売上構造
-    '03': ['09', '06', '10'],           // 課題 ← モス売上構造, 食品加工・製造, マクドナルド売上構造
-    '04': ['04', '08', '11', '14'],     // 事業領域の広げ方 ← 隣接市場, 垂直統合事例, 世界事例, 川上統合
-    '05': ['14', '11', '13'],           // 事業の再定義 ← 川上統合, 世界事例, 農業市場
-    '06': ['02', '15', '12', '06'],     // 戦略提言 ← M&A候補, 食品製造M&A, B2Bサプライ, 食品加工
-    '07': ['04', '12', '01'],           // 売上ブリッジ ← 隣接市場, B2Bサプライ, 財務状況
-    '08': ['15', '02', '05', '07'],     // 実行ロードマップ ← 食品製造M&A, M&A候補, モスファーム, 物流
+    '01': ['01', '09', '10'],
+    '02': ['01', '03', '09', '10'],
+    '03': ['09', '06', '10'],
+    '04': ['04', '08', '11', '14'],
+    '05': ['14', '11', '13'],
+    '06': ['02', '15', '12', '06'],
+    '07': ['04', '12', '01'],
+    '08': ['15', '02', '05', '07'],
   };
 
   const state = {
@@ -594,7 +568,7 @@
   }
 
   function cleanDisplayName(filename) {
-    return filename.replace(/\.md$/, '').replace(/^\d+_/, (m) => m).replace(/_/g, ' ');
+    return filename.replace(/\.md$/, '').replace(/^\d+_/, m => m).replace(/_/g, ' ');
   }
 
   function cleanResearchName(filename) {
@@ -607,32 +581,23 @@
       const num = getFileNum(f.name);
       if (!num) return;
       if (!byNum[num]) byNum[num] = { num, title: '', main: null, sub: null };
-      if (f.name.includes('補足')) {
-        byNum[num].sub = f;
-      } else {
-        byNum[num].main = f;
-        byNum[num].title = cleanTitle(f.name);
-      }
+      if (f.name.includes('補足')) { byNum[num].sub = f; }
+      else { byNum[num].main = f; byNum[num].title = cleanTitle(f.name); }
     });
     state.groups = Object.keys(byNum).sort().map(k => byNum[k]).filter(g => g.main);
   }
 
-  // Build the linear page sequence: main -> sub -> main -> sub -> ...
   function buildPageSequence() {
     const seq = [];
     state.groups.forEach((g, gi) => {
       seq.push({ gi, tab: 'main', label: g.title, num: g.num });
-      if (g.sub) {
-        seq.push({ gi, tab: 'sub', label: g.title, num: g.num, isSub: true });
-      }
+      if (g.sub) seq.push({ gi, tab: 'sub', label: g.title, num: g.num, isSub: true });
     });
     return seq;
   }
 
-  function getCurrentPageIndex(sequence) {
-    return sequence.findIndex(p =>
-      p.gi === state.currentGroupIndex && p.tab === state.currentTab
-    );
+  function getCurrentPageIndex(seq) {
+    return seq.findIndex(p => p.gi === state.currentGroupIndex && p.tab === state.currentTab);
   }
 
   async function init() {
@@ -643,29 +608,19 @@
       // Pre-populate cache with embedded content
       EMBEDDED_DATA.slides.forEach(f => { state.cache[f.name] = f.content; });
       EMBEDDED_DATA.research.forEach(f => { state.cache['research/' + f.name] = f.content; });
-
       buildGroups();
       renderFileList();
-
-      const mainCount = state.groups.length;
-      const subCount = state.groups.filter(g => g.sub).length;
       document.getElementById('fileCount').textContent =
-        `${mainCount} slides / ${state.research.length} refs`;
-
-      if (state.groups.length > 0) {
-        selectGroup(0, 'main');
-      }
+        `${state.groups.length} slides / ${state.research.length} refs`;
+      if (state.groups.length > 0) selectGroup(0, 'main');
     } catch (e) {
       document.getElementById('fileCount').textContent = 'Error loading files';
-      console.error(e);
     }
   }
 
   function renderFileList() {
     const list = document.getElementById('fileList');
-    let html = '';
-
-    html += '<div class="file-section"><div class="file-section-title">Slides</div>';
+    let html = '<div class="file-section"><div class="file-section-title">Slides</div>';
     state.groups.forEach((g, i) => {
       const hasSub = !!g.sub;
       html += `<li class="file-item" data-group="${i}" data-tab="main" data-type="slide">
@@ -694,14 +649,10 @@
     }
 
     list.innerHTML = html;
-
     list.querySelectorAll('.file-item').forEach(item => {
       item.addEventListener('click', () => {
-        if (item.dataset.type === 'research') {
-          selectResearch(parseInt(item.dataset.index));
-        } else {
-          selectGroup(parseInt(item.dataset.group), item.dataset.tab);
-        }
+        if (item.dataset.type === 'research') selectResearch(parseInt(item.dataset.index));
+        else selectGroup(parseInt(item.dataset.group), item.dataset.tab);
       });
     });
   }
@@ -709,13 +660,9 @@
   function updateSidebarActive() {
     document.querySelectorAll('.file-item').forEach(el => {
       if (el.dataset.type === 'research') {
-        el.classList.toggle('active',
-          state.viewingResearch && parseInt(el.dataset.index) === state.currentResearchIndex);
-      } else if (el.dataset.type === 'slide') {
-        const g = parseInt(el.dataset.group);
-        const t = el.dataset.tab;
-        el.classList.toggle('active',
-          !state.viewingResearch && g === state.currentGroupIndex && t === state.currentTab);
+        el.classList.toggle('active', state.viewingResearch && parseInt(el.dataset.index) === state.currentResearchIndex);
+      } else {
+        el.classList.toggle('active', !state.viewingResearch && parseInt(el.dataset.group) === state.currentGroupIndex && el.dataset.tab === state.currentTab);
       }
     });
   }
@@ -723,10 +670,7 @@
   function updateTabBar() {
     const group = state.groups[state.currentGroupIndex];
     const tabBar = document.getElementById('tabBar');
-    if (!group || !group.sub || state.viewingResearch) {
-      tabBar.classList.add('hidden');
-      return;
-    }
+    if (!group || !group.sub || state.viewingResearch) { tabBar.classList.add('hidden'); return; }
     tabBar.classList.remove('hidden');
     document.getElementById('tabMain').classList.toggle('active', state.currentTab === 'main');
     document.getElementById('tabSub').classList.toggle('active', state.currentTab === 'sub');
@@ -736,40 +680,29 @@
     const container = document.getElementById('relatedResearch');
     const list = document.getElementById('relatedResearchList');
 
-    if (state.viewingResearch) {
-      container.style.display = 'none';
-      return;
-    }
+    if (state.viewingResearch) { container.style.display = 'none'; return; }
 
     const group = state.groups[state.currentGroupIndex];
     if (!group) { container.style.display = 'none'; return; }
 
     const mapped = RESEARCH_MAP[group.num] || [];
-    if (mapped.length === 0) { container.style.display = 'none'; return; }
-
-    // Find matching research files
     const matches = [];
     mapped.forEach(prefix => {
       const idx = state.research.findIndex(r => getFileNum(r.name) === prefix);
-      if (idx >= 0) {
-        matches.push({ index: idx, file: state.research[idx] });
-      }
+      if (idx >= 0) matches.push({ index: idx, file: state.research[idx] });
     });
 
     if (matches.length === 0) { container.style.display = 'none'; return; }
 
     container.style.display = 'block';
     list.innerHTML = matches.map(m =>
-      `<div class="related-research-item" data-research-index="${m.index}">
-        <span class="ref-badge">REF</span>
-        ${cleanResearchName(m.file.name)}
+      `<div class="related-research-item" data-ri="${m.index}">
+        <span class="ref-badge">REF</span>${cleanResearchName(m.file.name)}
       </div>`
     ).join('');
 
     list.querySelectorAll('.related-research-item').forEach(item => {
-      item.addEventListener('click', () => {
-        selectResearch(parseInt(item.dataset.researchIndex));
-      });
+      item.addEventListener('click', () => selectResearch(parseInt(item.dataset.ri)));
     });
   }
 
@@ -780,69 +713,62 @@
     const nextBadge = document.getElementById('nextBadge');
 
     if (state.viewingResearch) {
-      // Research mode
-      const hasPrev = state.currentResearchIndex > 0;
-      const hasNext = state.currentResearchIndex < state.research.length - 1;
-      prevBtn.classList.toggle('disabled', !hasPrev);
-      nextBtn.classList.toggle('disabled', !hasNext);
-      document.getElementById('prevTitle').textContent =
-        hasPrev ? cleanResearchName(state.research[state.currentResearchIndex - 1].name) : '-';
-      document.getElementById('nextTitle').textContent =
-        hasNext ? cleanResearchName(state.research[state.currentResearchIndex + 1].name) : '-';
+      const hp = state.currentResearchIndex > 0;
+      const hn = state.currentResearchIndex < state.research.length - 1;
+      prevBtn.classList.toggle('disabled', !hp);
+      nextBtn.classList.toggle('disabled', !hn);
+      document.getElementById('prevTitle').textContent = hp ? cleanResearchName(state.research[state.currentResearchIndex - 1].name) : '';
+      document.getElementById('nextTitle').textContent = hn ? cleanResearchName(state.research[state.currentResearchIndex + 1].name) : '';
       prevBadge.textContent = ''; prevBadge.className = 'nav-badge';
       nextBadge.textContent = ''; nextBadge.className = 'nav-badge';
-      prevBtn.onclick = hasPrev ? () => selectResearch(state.currentResearchIndex - 1) : null;
-      nextBtn.onclick = hasNext ? () => selectResearch(state.currentResearchIndex + 1) : null;
+      prevBtn.onclick = hp ? () => selectResearch(state.currentResearchIndex - 1) : null;
+      nextBtn.onclick = hn ? () => selectResearch(state.currentResearchIndex + 1) : null;
       return;
     }
 
     const seq = buildPageSequence();
     const ci = getCurrentPageIndex(seq);
+    const hp = ci > 0;
+    const hn = ci < seq.length - 1;
 
-    const hasPrev = ci > 0;
-    const hasNext = ci < seq.length - 1;
+    prevBtn.classList.toggle('disabled', !hp);
+    nextBtn.classList.toggle('disabled', !hn);
 
-    prevBtn.classList.toggle('disabled', !hasPrev);
-    nextBtn.classList.toggle('disabled', !hasNext);
-
-    if (hasPrev) {
+    if (hp) {
       const p = seq[ci - 1];
       document.getElementById('prevTitle').textContent = `${p.num}. ${p.label}`;
       prevBadge.textContent = p.isSub ? '補足資料' : '本編';
       prevBadge.className = 'nav-badge ' + (p.isSub ? 'is-sub' : 'is-main');
       prevBtn.onclick = () => selectGroup(p.gi, p.tab);
     } else {
-      document.getElementById('prevTitle').textContent = '-';
+      document.getElementById('prevTitle').textContent = '';
       prevBadge.textContent = ''; prevBadge.className = 'nav-badge';
-      prevBtn.onclick = null;
     }
 
-    if (hasNext) {
+    if (hn) {
       const n = seq[ci + 1];
       document.getElementById('nextTitle').textContent = `${n.num}. ${n.label}`;
       nextBadge.textContent = n.isSub ? '補足資料' : '本編';
       nextBadge.className = 'nav-badge ' + (n.isSub ? 'is-sub' : 'is-main');
       nextBtn.onclick = () => selectGroup(n.gi, n.tab);
     } else {
-      document.getElementById('nextTitle').textContent = '-';
+      document.getElementById('nextTitle').textContent = '';
       nextBadge.textContent = ''; nextBadge.className = 'nav-badge';
-      nextBtn.onclick = null;
     }
   }
 
-  async function selectGroup(groupIndex, tab) {
-    if (groupIndex < 0 || groupIndex >= state.groups.length) return;
-    const group = state.groups[groupIndex];
+  async function selectGroup(gi, tab) {
+    if (gi < 0 || gi >= state.groups.length) return;
+    const group = state.groups[gi];
     if (tab === 'sub' && !group.sub) tab = 'main';
-
-    state.currentGroupIndex = groupIndex;
+    state.currentGroupIndex = gi;
     state.currentTab = tab;
     state.viewingResearch = false;
 
     const file = tab === 'sub' ? group.sub : group.main;
     const suffix = tab === 'sub' ? ' - 補足資料' : '';
     document.getElementById('slideTitle').textContent = `${group.num}. ${group.title}${suffix}`;
-    document.getElementById('slideCounter').textContent = `${groupIndex + 1} / ${state.groups.length}`;
+    document.getElementById('slideCounter').textContent = `${gi + 1} / ${state.groups.length}`;
 
     updateSidebarActive();
     updateTabBar();
@@ -852,19 +778,16 @@
   }
 
   function switchTab(tab) {
-    if (state.viewingResearch) return;
-    selectGroup(state.currentGroupIndex, tab);
+    if (!state.viewingResearch) selectGroup(state.currentGroupIndex, tab);
   }
 
   async function selectResearch(index) {
     if (index < 0 || index >= state.research.length) return;
     state.currentResearchIndex = index;
     state.viewingResearch = true;
-
     const file = state.research[index];
     document.getElementById('slideTitle').textContent = 'REF: ' + cleanResearchName(file.name);
     document.getElementById('slideCounter').textContent = `Ref ${index + 1} / ${state.research.length}`;
-
     updateSidebarActive();
     updateTabBar();
     await renderMarkdown(file.path);
@@ -877,40 +800,31 @@
       const res = await fetch(path);
       state.cache[path] = await res.text();
     }
-    const html = marked.parse(state.cache[path]);
-    document.getElementById('slideContent').innerHTML = html;
+    document.getElementById('slideContent').innerHTML = marked.parse(state.cache[path]);
     document.getElementById('contentContainer').scrollTop = 0;
   }
 
-  // Linear navigation
   function navPrev() {
-    if (state.viewingResearch) {
-      selectResearch(state.currentResearchIndex - 1);
-      return;
-    }
+    if (state.viewingResearch) { selectResearch(state.currentResearchIndex - 1); return; }
     const seq = buildPageSequence();
     const ci = getCurrentPageIndex(seq);
     if (ci > 0) selectGroup(seq[ci - 1].gi, seq[ci - 1].tab);
   }
 
   function navNext() {
-    if (state.viewingResearch) {
-      selectResearch(state.currentResearchIndex + 1);
-      return;
-    }
+    if (state.viewingResearch) { selectResearch(state.currentResearchIndex + 1); return; }
     const seq = buildPageSequence();
     const ci = getCurrentPageIndex(seq);
     if (ci < seq.length - 1) selectGroup(seq[ci + 1].gi, seq[ci + 1].tab);
   }
 
-  // Keyboard
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') { navPrev(); }
-    else if (e.key === 'ArrowRight') { navNext(); }
+    if (e.key === 'ArrowLeft') navPrev();
+    else if (e.key === 'ArrowRight') navNext();
     else if (e.key === 'Tab' && !state.viewingResearch) {
       e.preventDefault();
-      const group = state.groups[state.currentGroupIndex];
-      if (group && group.sub) switchTab(state.currentTab === 'main' ? 'sub' : 'main');
+      const g = state.groups[state.currentGroupIndex];
+      if (g && g.sub) switchTab(state.currentTab === 'main' ? 'sub' : 'main');
     } else if (e.key === 'f' || e.key === 'F') {
       if (!document.fullscreenElement) document.documentElement.requestFullscreen();
       else document.exitFullscreen();
