@@ -18,7 +18,7 @@
       --slide-bg: #ffffff;
       --slide-text: #1a1a1a;
       --sub-color: #ffb74d;
-      --sub-dim: #a0723a;
+      --ref-color: #7c8cf5;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -80,10 +80,7 @@
       flex: 1;
     }
 
-    /* Slide group: main + optional sub */
-    .slide-group {
-      margin-bottom: 2px;
-    }
+    .slide-group { margin-bottom: 2px; }
 
     .file-item {
       padding: 10px 20px;
@@ -128,24 +125,12 @@
       flex-shrink: 0;
     }
 
-    .file-item .badge.main {
-      background: var(--accent);
-      color: #000;
-    }
-
-    .file-item .badge.sub {
-      background: var(--sub-color);
-      color: #000;
-    }
-
-    .file-item .badge.ref {
-      background: #5c6bc0;
-      color: #fff;
-    }
+    .file-item .badge.main { background: var(--accent); color: #000; }
+    .file-item .badge.sub { background: var(--sub-color); color: #000; }
+    .file-item .badge.ref { background: #5c6bc0; color: #fff; }
 
     .file-item .has-sub-dot {
-      width: 6px;
-      height: 6px;
+      width: 6px; height: 6px;
       border-radius: 50%;
       background: var(--sub-color);
       flex-shrink: 0;
@@ -167,7 +152,8 @@
       overflow: hidden;
     }
 
-    .toolbar {
+    /* Top bar - title only, no nav buttons */
+    .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -177,15 +163,7 @@
       flex-shrink: 0;
     }
 
-    .toolbar-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-      flex: 1;
-    }
-
-    .toolbar .slide-title {
+    .topbar .slide-title {
       font-size: 14px;
       font-weight: 600;
       color: var(--text);
@@ -194,42 +172,13 @@
       text-overflow: ellipsis;
     }
 
-    .toolbar .nav-controls {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .topbar .slide-counter {
+      font-size: 12px;
+      color: var(--text-muted);
       flex-shrink: 0;
     }
 
-    .nav-btn {
-      background: var(--surface-hover);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 6px 14px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 13px;
-      transition: all 0.15s;
-    }
-
-    .nav-btn:hover {
-      background: var(--accent-dim);
-      border-color: var(--accent);
-    }
-
-    .nav-btn:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
-
-    .slide-counter {
-      font-size: 12px;
-      color: var(--text-muted);
-      min-width: 60px;
-      text-align: center;
-    }
-
-    /* Tab bar for main/sub toggle */
+    /* Tab bar */
     .tab-bar {
       display: flex;
       align-items: stretch;
@@ -237,12 +186,9 @@
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
       padding: 0 32px;
-      gap: 0;
     }
 
-    .tab-bar.hidden {
-      display: none;
-    }
+    .tab-bar.hidden { display: none; }
 
     .tab-btn {
       padding: 10px 24px;
@@ -254,7 +200,6 @@
       border: none;
       border-bottom: 3px solid transparent;
       transition: all 0.15s;
-      letter-spacing: 0.3px;
     }
 
     .tab-btn:hover {
@@ -272,11 +217,6 @@
       border-bottom-color: var(--sub-color);
     }
 
-    .tab-btn .tab-icon {
-      margin-right: 6px;
-      font-size: 11px;
-    }
-
     /* Content area */
     .content-container {
       flex: 1;
@@ -288,77 +228,145 @@
       color: var(--slide-text);
       max-width: 880px;
       margin: 0 auto;
-      padding: 40px 48px 80px;
+      padding: 40px 48px 20px;
     }
 
-    /* Bottom nav bar */
-    .bottom-nav {
+    /* Related research section */
+    .related-research {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 48px 20px;
+    }
+
+    .related-research-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #999;
+      margin-bottom: 10px;
+      padding-top: 20px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .related-research-list {
       display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .related-research-item {
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 12px 32px;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      flex-shrink: 0;
+      gap: 6px;
+      padding: 6px 14px;
+      background: #f0f0ff;
+      border: 1px solid #d0d0e8;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      color: #444;
+      transition: all 0.15s;
+    }
+
+    .related-research-item:hover {
+      background: #e0e8ff;
+      border-color: #5c6bc0;
+      color: #333;
+    }
+
+    .related-research-item .ref-badge {
+      font-size: 8px;
+      padding: 1px 5px;
+      border-radius: 3px;
+      background: #5c6bc0;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    /* Bottom page navigation */
+    .bottom-nav {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 24px 48px 48px;
+      display: flex;
+      gap: 16px;
     }
 
     .bottom-nav-btn {
+      flex: 1;
       display: flex;
       align-items: center;
-      gap: 8px;
-      background: var(--surface-hover);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 10px 20px;
-      border-radius: 8px;
+      gap: 12px;
+      padding: 16px 20px;
+      background: #f8f9fa;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
       cursor: pointer;
-      font-size: 13px;
       transition: all 0.15s;
-      max-width: 45%;
+      text-decoration: none;
     }
 
     .bottom-nav-btn:hover {
-      background: var(--accent-dim);
+      background: #e8f4fd;
       border-color: var(--accent);
     }
 
     .bottom-nav-btn.disabled {
-      opacity: 0.2;
+      opacity: 0.3;
       pointer-events: none;
+    }
+
+    .bottom-nav-btn.next {
+      flex-direction: row-reverse;
+      text-align: right;
+    }
+
+    .bottom-nav-btn .arrow {
+      font-size: 20px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .bottom-nav-btn .nav-text {
+      min-width: 0;
+      flex: 1;
     }
 
     .bottom-nav-btn .nav-label {
       font-size: 10px;
-      color: var(--text-muted);
+      color: #999;
       text-transform: uppercase;
       letter-spacing: 1px;
+      margin-bottom: 2px;
     }
 
     .bottom-nav-btn .nav-title {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
+      color: #333;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    .bottom-nav-btn.prev .nav-text {
-      text-align: left;
+    .bottom-nav-btn .nav-badge {
+      font-size: 9px;
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-weight: 700;
+      display: inline-block;
+      margin-top: 3px;
     }
 
-    .bottom-nav-btn.next {
-      margin-left: auto;
-      flex-direction: row-reverse;
+    .bottom-nav-btn .nav-badge.is-sub {
+      background: #fff3e0;
+      color: #e65100;
     }
 
-    .bottom-nav-btn.next .nav-text {
-      text-align: right;
-    }
-
-    .bottom-nav-btn .arrow {
-      font-size: 18px;
-      flex-shrink: 0;
-      color: var(--accent);
+    .bottom-nav-btn .nav-badge.is-main {
+      background: #e3f2fd;
+      color: #1565c0;
     }
 
     /* Typography */
@@ -441,18 +449,10 @@
       vertical-align: top;
     }
 
-    .content tbody tr:nth-child(even) {
-      background: #f8f9fa;
-    }
+    .content tbody tr:nth-child(even) { background: #f8f9fa; }
+    .content tbody tr:hover { background: #e8f4fd; }
 
-    .content tbody tr:hover {
-      background: #e8f4fd;
-    }
-
-    .content strong {
-      color: #1a1a2e;
-      font-weight: 700;
-    }
+    .content strong { color: #1a1a2e; font-weight: 700; }
 
     .content code {
       background: #f0f0f0;
@@ -467,7 +467,6 @@
       margin: 28px 0;
     }
 
-    /* Empty / Loading */
     .empty-state {
       text-align: center;
       color: var(--text-muted);
@@ -475,7 +474,6 @@
       padding: 40px;
     }
 
-    /* Keyboard hint */
     .keyboard-hint {
       padding: 16px 20px;
       border-top: 1px solid var(--border);
@@ -494,7 +492,7 @@
     }
 
     @media print {
-      .sidebar, .toolbar, .tab-bar, .bottom-nav { display: none; }
+      .sidebar, .topbar, .tab-bar { display: none; }
       body { background: white; }
       .content-container { overflow: visible; }
       .content { max-width: none; padding: 20px; }
@@ -510,54 +508,49 @@
   </div>
   <ul class="file-list" id="fileList"></ul>
   <div class="keyboard-hint">
-    <kbd>&larr;</kbd> <kbd>&rarr;</kbd> スライド移動<br>
+    <kbd>&larr;</kbd> <kbd>&rarr;</kbd> ページ移動<br>
     <kbd>Tab</kbd> 本編 / 補足 切替<br>
     <kbd>F</kbd> フルスクリーン
   </div>
 </aside>
 
 <main class="main">
-  <div class="toolbar">
-    <div class="toolbar-left">
-      <div class="slide-title" id="slideTitle">-</div>
-    </div>
-    <div class="nav-controls">
-      <button class="nav-btn" id="prevBtn" disabled>&larr; Prev</button>
-      <span class="slide-counter" id="slideCounter">-</span>
-      <button class="nav-btn" id="nextBtn" disabled>Next &rarr;</button>
-    </div>
+  <div class="topbar">
+    <div class="slide-title" id="slideTitle">-</div>
+    <div class="slide-counter" id="slideCounter">-</div>
   </div>
 
   <div class="tab-bar hidden" id="tabBar">
-    <button class="tab-btn active" id="tabMain" onclick="switchTab('main')">
-      <span class="tab-icon">&#9654;</span>本編
-    </button>
-    <button class="tab-btn sub-tab" id="tabSub" onclick="switchTab('sub')">
-      <span class="tab-icon">&#9656;</span>補足資料
-    </button>
+    <button class="tab-btn active" id="tabMain" onclick="switchTab('main')">本編</button>
+    <button class="tab-btn sub-tab" id="tabSub" onclick="switchTab('sub')">補足資料</button>
   </div>
 
-  <div class="content-container">
+  <div class="content-container" id="contentContainer">
     <div class="content" id="slideContent">
       <div class="empty-state">左のリストからファイルを選択してください</div>
     </div>
-  </div>
-
-  <div class="bottom-nav" id="bottomNav">
-    <button class="bottom-nav-btn prev disabled" id="bottomPrev" onclick="navPrev()">
-      <span class="arrow">&larr;</span>
-      <div class="nav-text">
-        <div class="nav-label">Previous</div>
-        <div class="nav-title" id="prevTitle">-</div>
-      </div>
-    </button>
-    <button class="bottom-nav-btn next disabled" id="bottomNext" onclick="navNext()">
-      <span class="arrow">&rarr;</span>
-      <div class="nav-text">
-        <div class="nav-label">Next</div>
-        <div class="nav-title" id="nextTitle">-</div>
-      </div>
-    </button>
+    <div class="related-research" id="relatedResearch" style="display:none;">
+      <div class="related-research-title">関連する調査資料</div>
+      <div class="related-research-list" id="relatedResearchList"></div>
+    </div>
+    <div class="bottom-nav" id="bottomNav">
+      <button class="bottom-nav-btn prev disabled" id="bottomPrev">
+        <span class="arrow">&larr;</span>
+        <div class="nav-text">
+          <div class="nav-label">Previous</div>
+          <div class="nav-title" id="prevTitle">-</div>
+          <div class="nav-badge" id="prevBadge"></div>
+        </div>
+      </button>
+      <button class="bottom-nav-btn next disabled" id="bottomNext">
+        <span class="arrow">&rarr;</span>
+        <div class="nav-text">
+          <div class="nav-label">Next</div>
+          <div class="nav-title" id="nextTitle">-</div>
+          <div class="nav-badge" id="nextBadge"></div>
+        </div>
+      </button>
+    </div>
   </div>
 </main>
 
@@ -568,13 +561,24 @@
 </script>
 
 <script>
+  // Research-to-slide mapping: slide number -> array of research file prefixes
+  const RESEARCH_MAP = {
+    '01': ['01', '09', '10'],           // 前提の整理 ← 財務状況, モス売上構造, マクドナルド売上構造
+    '02': ['01', '03', '09', '10'],     // 現状認識 ← 財務状況, 海外事業, モス/マック売上構造
+    '03': ['09', '06', '10'],           // 課題 ← モス売上構造, 食品加工・製造, マクドナルド売上構造
+    '04': ['04', '08', '11', '14'],     // 事業領域の広げ方 ← 隣接市場, 垂直統合事例, 世界事例, 川上統合
+    '05': ['14', '11', '13'],           // 事業の再定義 ← 川上統合, 世界事例, 農業市場
+    '06': ['02', '15', '12', '06'],     // 戦略提言 ← M&A候補, 食品製造M&A, B2Bサプライ, 食品加工
+    '07': ['04', '12', '01'],           // 売上ブリッジ ← 隣接市場, B2Bサプライ, 財務状況
+    '08': ['15', '02', '05', '07'],     // 実行ロードマップ ← 食品製造M&A, M&A候補, モスファーム, 物流
+  };
+
   const state = {
     files: [],
     research: [],
-    // Grouped slides: [{ num, title, main: fileObj, sub: fileObj|null }, ...]
     groups: [],
     currentGroupIndex: -1,
-    currentTab: 'main', // 'main' or 'sub'
+    currentTab: 'main',
     viewingResearch: false,
     currentResearchIndex: -1,
     cache: {}
@@ -585,28 +589,16 @@
     return m ? m[1] : null;
   }
 
-  function getTopicName(name) {
-    // Extract the topic part: "01_メイン_前提の整理.md" → "前提の整理"
-    return name
-      .replace(/\.md$/, '')
-      .replace(/^\d+_(メイン|補足)_/, '')
-      .replace(/^\d+_/, '');
-  }
-
   function cleanTitle(name) {
-    return name
-      .replace(/\.md$/, '')
-      .replace(/^\d+_メイン_/, '')
-      .replace(/^\d+_補足_/, '')
-      .replace(/^\d+_/, '')
-      .replace(/_/g, ' ');
+    return name.replace(/\.md$/, '').replace(/^\d+_(メイン|補足)_/, '').replace(/_/g, ' ');
   }
 
   function cleanDisplayName(filename) {
-    return filename
-      .replace(/\.md$/, '')
-      .replace(/^\d+_/, (m) => m)
-      .replace(/_/g, ' ');
+    return filename.replace(/\.md$/, '').replace(/^\d+_/, (m) => m).replace(/_/g, ' ');
+  }
+
+  function cleanResearchName(filename) {
+    return filename.replace(/\.md$/, '').replace(/^\d+_/, '').replace(/_/g, ' ');
   }
 
   function buildGroups() {
@@ -622,10 +614,25 @@
         byNum[num].title = cleanTitle(f.name);
       }
     });
-    state.groups = Object.keys(byNum)
-      .sort()
-      .map(k => byNum[k])
-      .filter(g => g.main); // must have a main slide
+    state.groups = Object.keys(byNum).sort().map(k => byNum[k]).filter(g => g.main);
+  }
+
+  // Build the linear page sequence: main -> sub -> main -> sub -> ...
+  function buildPageSequence() {
+    const seq = [];
+    state.groups.forEach((g, gi) => {
+      seq.push({ gi, tab: 'main', label: g.title, num: g.num });
+      if (g.sub) {
+        seq.push({ gi, tab: 'sub', label: g.title, num: g.num, isSub: true });
+      }
+    });
+    return seq;
+  }
+
+  function getCurrentPageIndex(sequence) {
+    return sequence.findIndex(p =>
+      p.gi === state.currentGroupIndex && p.tab === state.currentTab
+    );
   }
 
   async function init() {
@@ -643,7 +650,7 @@
       const mainCount = state.groups.length;
       const subCount = state.groups.filter(g => g.sub).length;
       document.getElementById('fileCount').textContent =
-        `${mainCount} slides (${subCount} with appendix) / ${state.research.length} refs`;
+        `${mainCount} slides / ${state.research.length} refs`;
 
       if (state.groups.length > 0) {
         selectGroup(0, 'main');
@@ -658,7 +665,6 @@
     const list = document.getElementById('fileList');
     let html = '';
 
-    // Main slides grouped
     html += '<div class="file-section"><div class="file-section-title">Slides</div>';
     state.groups.forEach((g, i) => {
       const hasSub = !!g.sub;
@@ -676,7 +682,6 @@
     });
     html += '</div>';
 
-    // Research files
     if (state.research.length > 0) {
       html += '<div class="file-section"><div class="file-section-title">Reference</div>';
       state.research.forEach((f, i) => {
@@ -727,74 +732,107 @@
     document.getElementById('tabSub').classList.toggle('active', state.currentTab === 'sub');
   }
 
-  function updateBottomNav() {
-    const prevBtn = document.getElementById('bottomPrev');
-    const nextBtn = document.getElementById('bottomNext');
+  function renderRelatedResearch() {
+    const container = document.getElementById('relatedResearch');
+    const list = document.getElementById('relatedResearchList');
 
     if (state.viewingResearch) {
-      // Research mode: prev/next within research
-      const hasPrev = state.currentResearchIndex > 0;
-      const hasNext = state.currentResearchIndex < state.research.length - 1;
-
-      prevBtn.classList.toggle('disabled', !hasPrev);
-      nextBtn.classList.toggle('disabled', !hasNext);
-      document.getElementById('prevTitle').textContent =
-        hasPrev ? cleanDisplayName(state.research[state.currentResearchIndex - 1].name) : '-';
-      document.getElementById('nextTitle').textContent =
-        hasNext ? cleanDisplayName(state.research[state.currentResearchIndex + 1].name) : '-';
+      container.style.display = 'none';
       return;
     }
 
-    const gi = state.currentGroupIndex;
-    const group = state.groups[gi];
-    if (!group) return;
+    const group = state.groups[state.currentGroupIndex];
+    if (!group) { container.style.display = 'none'; return; }
 
-    // Determine prev/next targets
-    let prevTarget = null;
-    let nextTarget = null;
+    const mapped = RESEARCH_MAP[group.num] || [];
+    if (mapped.length === 0) { container.style.display = 'none'; return; }
 
-    if (state.currentTab === 'sub') {
-      // Currently on sub -> prev is this group's main
-      prevTarget = { gi, tab: 'main', label: `${group.num}. ${group.title}  (本編)` };
-      // next is next group's main
-      if (gi < state.groups.length - 1) {
-        const ng = state.groups[gi + 1];
-        nextTarget = { gi: gi + 1, tab: 'main', label: `${ng.num}. ${ng.title}` };
+    // Find matching research files
+    const matches = [];
+    mapped.forEach(prefix => {
+      const idx = state.research.findIndex(r => getFileNum(r.name) === prefix);
+      if (idx >= 0) {
+        matches.push({ index: idx, file: state.research[idx] });
       }
-    } else {
-      // Currently on main
-      if (group.sub) {
-        // next is this group's sub
-        nextTarget = { gi, tab: 'sub', label: `${group.num}. ${group.title}  (補足)` };
-      } else if (gi < state.groups.length - 1) {
-        const ng = state.groups[gi + 1];
-        nextTarget = { gi: gi + 1, tab: 'main', label: `${ng.num}. ${ng.title}` };
-      }
-      // prev
-      if (gi > 0) {
-        const pg = state.groups[gi - 1];
-        if (pg.sub) {
-          prevTarget = { gi: gi - 1, tab: 'sub', label: `${pg.num}. ${pg.title}  (補足)` };
-        } else {
-          prevTarget = { gi: gi - 1, tab: 'main', label: `${pg.num}. ${pg.title}` };
-        }
-      }
+    });
+
+    if (matches.length === 0) { container.style.display = 'none'; return; }
+
+    container.style.display = 'block';
+    list.innerHTML = matches.map(m =>
+      `<div class="related-research-item" data-research-index="${m.index}">
+        <span class="ref-badge">REF</span>
+        ${cleanResearchName(m.file.name)}
+      </div>`
+    ).join('');
+
+    list.querySelectorAll('.related-research-item').forEach(item => {
+      item.addEventListener('click', () => {
+        selectResearch(parseInt(item.dataset.researchIndex));
+      });
+    });
+  }
+
+  function updateBottomNav() {
+    const prevBtn = document.getElementById('bottomPrev');
+    const nextBtn = document.getElementById('bottomNext');
+    const prevBadge = document.getElementById('prevBadge');
+    const nextBadge = document.getElementById('nextBadge');
+
+    if (state.viewingResearch) {
+      // Research mode
+      const hasPrev = state.currentResearchIndex > 0;
+      const hasNext = state.currentResearchIndex < state.research.length - 1;
+      prevBtn.classList.toggle('disabled', !hasPrev);
+      nextBtn.classList.toggle('disabled', !hasNext);
+      document.getElementById('prevTitle').textContent =
+        hasPrev ? cleanResearchName(state.research[state.currentResearchIndex - 1].name) : '-';
+      document.getElementById('nextTitle').textContent =
+        hasNext ? cleanResearchName(state.research[state.currentResearchIndex + 1].name) : '-';
+      prevBadge.textContent = ''; prevBadge.className = 'nav-badge';
+      nextBadge.textContent = ''; nextBadge.className = 'nav-badge';
+      prevBtn.onclick = hasPrev ? () => selectResearch(state.currentResearchIndex - 1) : null;
+      nextBtn.onclick = hasNext ? () => selectResearch(state.currentResearchIndex + 1) : null;
+      return;
     }
 
-    prevBtn.classList.toggle('disabled', !prevTarget);
-    nextBtn.classList.toggle('disabled', !nextTarget);
-    document.getElementById('prevTitle').textContent = prevTarget ? prevTarget.label : '-';
-    document.getElementById('nextTitle').textContent = nextTarget ? nextTarget.label : '-';
+    const seq = buildPageSequence();
+    const ci = getCurrentPageIndex(seq);
 
-    prevBtn.onclick = prevTarget ? () => selectGroup(prevTarget.gi, prevTarget.tab) : null;
-    nextBtn.onclick = nextTarget ? () => selectGroup(nextTarget.gi, nextTarget.tab) : null;
+    const hasPrev = ci > 0;
+    const hasNext = ci < seq.length - 1;
+
+    prevBtn.classList.toggle('disabled', !hasPrev);
+    nextBtn.classList.toggle('disabled', !hasNext);
+
+    if (hasPrev) {
+      const p = seq[ci - 1];
+      document.getElementById('prevTitle').textContent = `${p.num}. ${p.label}`;
+      prevBadge.textContent = p.isSub ? '補足資料' : '本編';
+      prevBadge.className = 'nav-badge ' + (p.isSub ? 'is-sub' : 'is-main');
+      prevBtn.onclick = () => selectGroup(p.gi, p.tab);
+    } else {
+      document.getElementById('prevTitle').textContent = '-';
+      prevBadge.textContent = ''; prevBadge.className = 'nav-badge';
+      prevBtn.onclick = null;
+    }
+
+    if (hasNext) {
+      const n = seq[ci + 1];
+      document.getElementById('nextTitle').textContent = `${n.num}. ${n.label}`;
+      nextBadge.textContent = n.isSub ? '補足資料' : '本編';
+      nextBadge.className = 'nav-badge ' + (n.isSub ? 'is-sub' : 'is-main');
+      nextBtn.onclick = () => selectGroup(n.gi, n.tab);
+    } else {
+      document.getElementById('nextTitle').textContent = '-';
+      nextBadge.textContent = ''; nextBadge.className = 'nav-badge';
+      nextBtn.onclick = null;
+    }
   }
 
   async function selectGroup(groupIndex, tab) {
     if (groupIndex < 0 || groupIndex >= state.groups.length) return;
     const group = state.groups[groupIndex];
-
-    // If requesting sub but none exists, show main
     if (tab === 'sub' && !group.sub) tab = 'main';
 
     state.currentGroupIndex = groupIndex;
@@ -802,19 +840,14 @@
     state.viewingResearch = false;
 
     const file = tab === 'sub' ? group.sub : group.main;
-
-    // Update toolbar
     const suffix = tab === 'sub' ? ' - 補足資料' : '';
     document.getElementById('slideTitle').textContent = `${group.num}. ${group.title}${suffix}`;
-    document.getElementById('slideCounter').textContent =
-      `${groupIndex + 1} / ${state.groups.length}`;
-    document.getElementById('prevBtn').disabled = groupIndex === 0 && tab === 'main';
-    document.getElementById('nextBtn').disabled =
-      groupIndex === state.groups.length - 1 && (tab === 'sub' || !group.sub);
+    document.getElementById('slideCounter').textContent = `${groupIndex + 1} / ${state.groups.length}`;
 
     updateSidebarActive();
     updateTabBar();
     await renderMarkdown(file.path);
+    renderRelatedResearch();
     updateBottomNav();
   }
 
@@ -829,16 +862,13 @@
     state.viewingResearch = true;
 
     const file = state.research[index];
-
-    document.getElementById('slideTitle').textContent = 'REF: ' + cleanDisplayName(file.name);
-    document.getElementById('slideCounter').textContent =
-      `Ref ${index + 1} / ${state.research.length}`;
-    document.getElementById('prevBtn').disabled = index === 0;
-    document.getElementById('nextBtn').disabled = index === state.research.length - 1;
+    document.getElementById('slideTitle').textContent = 'REF: ' + cleanResearchName(file.name);
+    document.getElementById('slideCounter').textContent = `Ref ${index + 1} / ${state.research.length}`;
 
     updateSidebarActive();
     updateTabBar();
     await renderMarkdown(file.path);
+    renderRelatedResearch();
     updateBottomNav();
   }
 
@@ -847,26 +877,20 @@
       const res = await fetch(path);
       state.cache[path] = await res.text();
     }
-    const md = state.cache[path];
-    const html = marked.parse(md);
+    const html = marked.parse(state.cache[path]);
     document.getElementById('slideContent').innerHTML = html;
-    document.querySelector('.content-container').scrollTop = 0;
+    document.getElementById('contentContainer').scrollTop = 0;
   }
 
-  // Top toolbar prev/next (navigate through the linear sequence)
+  // Linear navigation
   function navPrev() {
     if (state.viewingResearch) {
       selectResearch(state.currentResearchIndex - 1);
       return;
     }
-    const gi = state.currentGroupIndex;
-    const group = state.groups[gi];
-    if (state.currentTab === 'sub') {
-      selectGroup(gi, 'main');
-    } else if (gi > 0) {
-      const pg = state.groups[gi - 1];
-      selectGroup(gi - 1, pg.sub ? 'sub' : 'main');
-    }
+    const seq = buildPageSequence();
+    const ci = getCurrentPageIndex(seq);
+    if (ci > 0) selectGroup(seq[ci - 1].gi, seq[ci - 1].tab);
   }
 
   function navNext() {
@@ -874,36 +898,22 @@
       selectResearch(state.currentResearchIndex + 1);
       return;
     }
-    const gi = state.currentGroupIndex;
-    const group = state.groups[gi];
-    if (state.currentTab === 'main' && group.sub) {
-      selectGroup(gi, 'sub');
-    } else if (gi < state.groups.length - 1) {
-      selectGroup(gi + 1, 'main');
-    }
+    const seq = buildPageSequence();
+    const ci = getCurrentPageIndex(seq);
+    if (ci < seq.length - 1) selectGroup(seq[ci + 1].gi, seq[ci + 1].tab);
   }
 
-  document.getElementById('prevBtn').addEventListener('click', navPrev);
-  document.getElementById('nextBtn').addEventListener('click', navNext);
-
-  // Keyboard navigation
+  // Keyboard
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') {
-      navPrev();
-    } else if (e.key === 'ArrowRight') {
-      navNext();
-    } else if (e.key === 'Tab' && !state.viewingResearch) {
+    if (e.key === 'ArrowLeft') { navPrev(); }
+    else if (e.key === 'ArrowRight') { navNext(); }
+    else if (e.key === 'Tab' && !state.viewingResearch) {
       e.preventDefault();
       const group = state.groups[state.currentGroupIndex];
-      if (group && group.sub) {
-        switchTab(state.currentTab === 'main' ? 'sub' : 'main');
-      }
+      if (group && group.sub) switchTab(state.currentTab === 'main' ? 'sub' : 'main');
     } else if (e.key === 'f' || e.key === 'F') {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen();
-      } else {
-        document.exitFullscreen();
-      }
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
     }
   });
 
