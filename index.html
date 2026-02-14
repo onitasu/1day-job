@@ -7,17 +7,17 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     :root {
-      --bg: #0f0f0f;
-      --surface: #1a1a2e;
-      --surface-hover: #222240;
-      --accent: #4fc3f7;
-      --accent-dim: #2a7da8;
-      --text: #e8e8e8;
-      --text-muted: #999;
-      --border: #2a2a4a;
+      --bg: #111;
+      --surface: #1a1a1a;
+      --surface-hover: #252525;
+      --accent: #fff;
+      --accent-dim: #888;
+      --text: #e0e0e0;
+      --text-muted: #777;
+      --border: #333;
       --slide-bg: #ffffff;
       --slide-text: #1a1a1a;
-      --sub-color: #ffb74d;
+      --sub-color: #aaa;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -104,8 +104,8 @@
     }
 
     .file-item.active.is-sub {
-      color: var(--sub-color);
-      border-left-color: var(--sub-color);
+      color: #ccc;
+      border-left-color: #999;
     }
 
     .file-item.is-sub {
@@ -122,14 +122,14 @@
       flex-shrink: 0;
     }
 
-    .file-item .badge.main { background: var(--accent); color: #000; }
-    .file-item .badge.sub { background: var(--sub-color); color: #000; }
-    .file-item .badge.ref { background: #5c6bc0; color: #fff; }
+    .file-item .badge.main { background: #fff; color: #000; }
+    .file-item .badge.sub { background: #666; color: #fff; }
+    .file-item .badge.ref { background: #444; color: #ccc; }
 
     .file-item .has-sub-dot {
       width: 6px; height: 6px;
       border-radius: 50%;
-      background: var(--sub-color);
+      background: #777;
       flex-shrink: 0;
       margin-left: auto;
     }
@@ -196,7 +196,7 @@
 
     .tab-btn:hover { color: var(--text); background: var(--surface-hover); }
     .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
-    .tab-btn.active.sub-tab { color: var(--sub-color); border-bottom-color: var(--sub-color); }
+    .tab-btn.active.sub-tab { color: #ccc; border-bottom-color: #999; }
 
     /* Content area */
     .content-container {
@@ -242,7 +242,7 @@
       align-items: center;
       gap: 6px;
       padding: 7px 14px;
-      background: #f4f4fa;
+      background: #f5f5f5;
       border: 1px solid #ddd;
       border-radius: 6px;
       cursor: pointer;
@@ -252,16 +252,16 @@
     }
 
     .related-research-item:hover {
-      background: #e8ecff;
-      border-color: #5c6bc0;
-      color: #333;
+      background: #e8e8e8;
+      border-color: #999;
+      color: #222;
     }
 
     .related-research-item .ref-badge {
       font-size: 8px;
       padding: 1px 5px;
       border-radius: 3px;
-      background: #5c6bc0;
+      background: #444;
       color: #fff;
       font-weight: 700;
     }
@@ -306,7 +306,7 @@
 
     .bottom-nav-btn .arrow {
       font-size: 18px;
-      color: var(--accent);
+      color: #999;
       flex-shrink: 0;
     }
 
@@ -341,24 +341,24 @@
       margin-top: 3px;
     }
 
-    .bottom-nav-btn .nav-badge.is-sub { background: rgba(255,183,77,0.2); color: var(--sub-color); }
-    .bottom-nav-btn .nav-badge.is-main { background: rgba(79,195,247,0.15); color: var(--accent); }
+    .bottom-nav-btn .nav-badge.is-sub { background: rgba(255,255,255,0.08); color: #999; }
+    .bottom-nav-btn .nav-badge.is-main { background: rgba(255,255,255,0.1); color: #ccc; }
 
     /* Typography */
     .content h1 {
       font-size: 28px;
       font-weight: 800;
-      color: #1a1a2e;
+      color: #111;
       margin-bottom: 24px;
       padding-bottom: 12px;
-      border-bottom: 3px solid var(--accent);
+      border-bottom: 3px solid #222;
       line-height: 1.3;
     }
 
     .content h2 {
       font-size: 21px;
       font-weight: 700;
-      color: #2a2a4a;
+      color: #222;
       margin-top: 32px;
       margin-bottom: 14px;
       line-height: 1.3;
@@ -392,13 +392,13 @@
     }
 
     .content blockquote {
-      border-left: 4px solid var(--accent);
-      background: #f0f8ff;
+      border-left: 4px solid #333;
+      background: #f5f5f5;
       padding: 14px 24px;
       margin: 20px 0;
       border-radius: 0 6px 6px 0;
       font-size: 16px;
-      color: #1a1a2e;
+      color: #222;
       font-weight: 500;
     }
 
@@ -410,7 +410,7 @@
     }
 
     .content thead th {
-      background: #1a1a2e;
+      background: #222;
       color: #fff;
       padding: 11px 16px;
       text-align: left;
@@ -425,8 +425,8 @@
     }
 
     .content tbody tr:nth-child(even) { background: #f8f9fa; }
-    .content tbody tr:hover { background: #e8f4fd; }
-    .content strong { color: #1a1a2e; font-weight: 700; }
+    .content tbody tr:hover { background: #eee; }
+    .content strong { color: #111; font-weight: 700; }
 
     .content code {
       background: #f0f0f0;
